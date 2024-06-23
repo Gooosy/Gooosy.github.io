@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,82 +7,74 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
         }
-        .navbar {
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+        .header .title {
+            font-size: 2em;
+            margin-right: 10px;
+        }
+        .header .subtitle {
+            font-size: 1em;
+            color: gray;
+        }
+        .nav-bar {
             background-color: #333;
             overflow: hidden;
         }
-        .navbar a {
+        .nav-bar a {
             float: left;
             display: block;
-            color: #f2f2f2;
+            color: white;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
         }
-        .navbar a:hover {
+        .nav-bar a:hover {
             background-color: #ddd;
             color: black;
         }
-        .header {
-            padding: 20px;
-            text-align: left;
-            background: #f1f1f1;
+        .content {
+            display: flex;
+            margin: 20px;
         }
-        .header h1 {
-            font-size: 36px;
-            margin: 0;
+        .content img {
+            margin-left: 20px;
+            border-radius: 50%;
+            max-width: 200px;
         }
-        .header h2 {
-            font-size: 24px;
-            margin: 0;
-            color: gray;
+        .content p {
+            max-width: 600px;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Gong Siyuan</h1>
-        <h2>龚思元</h2>
+<div class="header">
+    <div>
+        <div class="title">Siyuan Gong</div>
+        <div class="subtitle">龚思元</div>
     </div>
+</div>
 
-    <div class="navbar">
-        <a href="#about">About Me</a>
-        <a href="#publications">Publications</a>
-        <a href="#scholarship">Scholarship</a>
-        <a href="#experience">Experience</a>
-        <a href="#blog">Blog</a>
-    </div>
+<div class="nav-bar">
+    <a href="#about">About Me</a>
+    <a href="#publications">Publications</a>
+    <a href="#award">award</a>
+    <a href="#experience">Experience</a>
+    <a href="#blog">Blog</a>
+</div>
 
-    <div id="about">
-        <h2>About Me</h2>
+<div class="content">
+    <div>
         <p>Welcome to my academic personal page. Here you can find information about my research, publications, and more.</p>
-        <p>I am Siyuan Gong from Zhejiang University and University of Illinois at Urbana-Champaign, majoring Electrical and Computer Engineering(ECE), expected to receive the degree of Bachelor of Science in June, 2027.</p>
+        <p>Feel free to explore the various sections to learn more about my work and achievements.</p>
     </div>
-
-    <div id="publications">
-        <h2>Publications</h2>
-        <p>The fiture is promising</p>
-        <p>我的未来无限可能o(≧v≦)o</p>
-    </div>
-
-    <div id="scholarship">
-        <h2>Scholarship</h2>
-        <p>Details to be added</p>
-    </div>
-
-    <div id="experience">
-        <h2>Experience</h2>
-        <p>Information about your professional experience.</p>
-    </div>
-
-    <div id="blog">
-        <h2>Blog</h2>
-        <p>Your blog posts will appear here.</p>
-    </div>
+    <img src="your-photo.jpg" alt="Your Photo">
+</div>
 
 </body>
 </html>
