@@ -3,202 +3,909 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Personal Page</title>
+    <title>Siyuan Gong | Academic Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon_logosc/favicon.ico" type="image/x-icon">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary:        #2d6a4f;
+            --primary-light:  #52b788;
+            --primary-lighter:#95d5b2;
+            --primary-pale:   #d8f3dc;
+            --primary-dark:   #1b4332;
+            --accent:         #40916c;
+            --gold:           #c9974a;
+            --bg:             #f8fffe;
+            --bg-card:        #ffffff;
+            --text:           #1a2e1f;
+            --text-muted:     #5a7a64;
+            --border:         #c8e6d4;
+            --shadow:         0 4px 20px rgba(45,106,79,0.10);
+            --shadow-hover:   0 8px 32px rgba(45,106,79,0.20);
+            --nav-height:     60px;
         }
-        .header {
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* ── Nav ── */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-dark);
+            height: var(--nav-height);
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 0 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.25);
         }
-        .header .title {
-            font-size: 2em;
-            margin-right: 10px;
-        }
-        .header .subtitle {
-            font-size: 1em;
-            color: gray;
-        }
-        .nav-bar {
-            background-color: #333;
-            overflow: hidden;
-        }
-        .nav-bar a {
-            float: left;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-lighter);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-right: auto;
             text-decoration: none;
         }
-        .nav-bar a:hover {
-            background-color: #ddd;
-            color: black;
+
+        .nav-links { display: flex; gap: 0.2rem; list-style: none; }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.82);
+            text-decoration: none;
+            padding: 0.45rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.18s, color 0.18s;
         }
-        .content {
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255,255,255,0.13);
+            color: #fff;
+        }
+
+        .nav-links a.active {
+            background: rgba(149,213,178,0.22);
+            color: var(--primary-lighter);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.85);
+            font-size: 1.15rem;
+            cursor: pointer;
+            padding: 0.4rem;
+            border-radius: 6px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, var(--accent) 100%);
+            padding: 4.5rem 2rem 4rem;
+        }
+
+        .hero-inner {
+            max-width: 960px;
+            margin: 0 auto;
             display: flex;
-            margin: 20px;
-            align-items:flex-start;
+            align-items: center;
+            gap: 3rem;
         }
-        .content img {
-            margin-left: 20px;
+
+        .hero-photo {
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            border: 4px solid rgba(255,255,255,0.38);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.30);
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .hero-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 0.25rem;
+        }
+
+        .chinese-name {
+            font-size: 1.1rem;
+            color: var(--primary-lighter);
+            margin-bottom: 0.9rem;
+        }
+
+        .affiliation {
+            font-size: 0.94rem;
+            color: rgba(255,255,255,0.82);
+            margin-bottom: 1.5rem;
+            line-height: 1.68;
+        }
+
+        .affiliation strong { color: #fff; }
+
+        .hero-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-contact a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.13);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.4rem 0.95rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.22);
+            transition: background 0.18s;
+        }
+
+        .hero-contact a:hover { background: rgba(255,255,255,0.25); }
+
+        .hero-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+        .hero-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.38rem;
+            background: var(--primary-lighter);
+            color: var(--primary-dark);
+            text-decoration: none;
+            padding: 0.38rem 0.95rem;
+            border-radius: 6px;
+            font-size: 0.83rem;
+            font-weight: 700;
+            transition: background 0.18s, transform 0.15s;
+        }
+
+        .hero-links a:hover { background: #fff; transform: translateY(-2px); }
+
+        /* ── Main ── */
+        .main-content {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 3rem;
+        }
+
+        /* ── Cards ── */
+        .section-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            padding: 2rem 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.25s;
+        }
+
+        .section-card:hover { box-shadow: var(--shadow-hover); }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--primary-pale);
+        }
+
+        .section-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--primary-pale);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.92rem;
+            flex-shrink: 0;
+        }
+
+        /* ── Fade-in ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── About ── */
+        .about-text { font-size: 0.97rem; line-height: 1.8; }
+        .about-text + .about-text { margin-top: 0.6rem; }
+
+        /* ── Education ── */
+        .edu-list { display: flex; flex-direction: column; gap: 1rem; }
+
+        .edu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .edu-school { font-weight: 700; color: var(--primary-dark); font-size: 0.97rem; }
+        .edu-degree { font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 0.12rem; }
+
+        .edu-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
+        }
+
+        .edu-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.28rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.16rem 0.55rem;
+            border-radius: 6px;
+            background: var(--primary-pale);
+            color: var(--primary-dark);
+        }
+
+        .edu-date {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            font-style: italic;
+            white-space: nowrap;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .edu-divider {
+            border: none;
+            border-top: 1px solid var(--primary-pale);
+        }
+
+        /* ── Paper Card ── */
+        .paper-card {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.4rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            align-items: flex-start;
+            transition: box-shadow 0.2s;
+        }
+
+        .paper-card:hover { box-shadow: var(--shadow-hover); background: #fff; }
+
+        .paper-thumb {
+            flex-shrink: 0;
+            width: 190px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .paper-thumb img { width: 100%; height: auto; display: block; }
+
+        .paper-title {
+            font-size: 1.03rem;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.4;
+            margin-bottom: 0.4rem;
+        }
+
+        .paper-authors {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0.4rem;
+        }
+
+        .paper-authors strong { color: var(--text); font-weight: 700; }
+
+        .paper-venue {
+            font-size: 0.845rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.7rem;
+        }
+
+        .paper-abstract {
+            font-size: 0.88rem;
+            color: #374151;
+            line-height: 1.7;
+            margin-bottom: 0.85rem;
+        }
+
+        .paper-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+        .paper-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 0.25rem 0.7rem;
             border-radius: 5px;
-            max-width: 400px;
-            height:auto;
+            border: 1px solid var(--primary-lighter);
+            background: var(--primary-pale);
+            transition: background 0.18s;
         }
-        .content p {
-            max-width: 600px;
+
+        .paper-link:hover { background: var(--primary-lighter); color: var(--primary-dark); }
+
+        /* ── Simple List (competition / work / projects) ── */
+        .simple-list { display: flex; flex-direction: column; gap: 0.9rem; }
+
+        .simple-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-light);
+            transition: background 0.18s, transform 0.18s;
         }
-        .text-container {
-            max-width: 900px;
-            width: 100%;
-            margin-left: 20px;
+
+        .simple-item:hover { background: var(--primary-pale); transform: translateX(3px); }
+
+        .simple-left { flex: 1; min-width: 0; }
+
+        .simple-title {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.93rem;
         }
-        .text-container0 {
-            max-width: 550px;
-            width: 100%;
-            margin-left: 20px;
+
+        .simple-sub {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            margin-top: 0.18rem;
+            line-height: 1.5;
         }
-        .footer {
-            margin-top: 20px;
-        }
-        .footer .icon {
-            display: inline-block;
-            margin-right: 10px;
-            color: black;
+
+        .simple-links { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.45rem; }
+
+        .simple-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.28rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--primary);
             text-decoration: none;
+            padding: 0.18rem 0.6rem;
+            border-radius: 5px;
+            border: 1px solid var(--primary-lighter);
+            background: var(--primary-pale);
+            transition: background 0.18s;
         }
-        .footer .icon:hover {
-            color: gray;
+
+        .simple-link:hover { background: var(--primary-lighter); color: var(--primary-dark); }
+
+        .simple-date {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-style: italic;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 2px;
         }
-        .links a, a.links {
-            color: #20b2aa !important;/* Link color */
+
+        /* ── Awards ── */
+        .awards-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+
+        .award-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            padding: 0.82rem 1.1rem;
+            background: var(--bg);
+            border-radius: 9px;
+            border-left: 3px solid var(--primary-light);
+            transition: background 0.18s, transform 0.18s;
+        }
+
+        .award-item:hover { background: var(--primary-pale); transform: translateX(4px); }
+        .award-icon { color: var(--gold); font-size: 0.95rem; margin-top: 3px; flex-shrink: 0; }
+        .award-name { font-weight: 600; color: var(--primary-dark); font-size: 0.92rem; }
+        .award-org  { color: var(--text-muted); font-size: 0.855rem; margin-top: 0.1rem; }
+
+        /* ── Blog Cards ── */
+        .blog-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+        .blog-card {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.9rem 1.3rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
             text-decoration: none;
-            margin-right: 10px;
+            color: var(--text);
+            min-width: 200px;
+            transition: all 0.2s;
         }
-        .links a:hover, a.links:hover {
-            color: #20b2aa !important;/* Link color */
-            text-decoration: underline;
+
+        .blog-card:hover {
+            background: var(--primary-pale);
+            border-color: var(--primary-lighter);
+            color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .blog-card-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--primary-pale);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .blog-card-label { font-weight: 600; font-size: 0.925rem; }
+        .blog-card-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 1px; }
+
+        /* ── Publications empty ── */
+        .pubs-empty {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.94rem;
+        }
+
+        .pubs-empty i {
+            font-size: 1.6rem;
+            color: var(--primary-lighter);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ── Back to top ── */
+        #back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 42px;
+            height: 42px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(45,106,79,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 0.25s, transform 0.25s, background 0.18s;
+            z-index: 999;
+        }
+
+        #back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        #back-to-top:hover { background: var(--primary-dark); }
+
+        /* ── Footer ── */
+        .site-footer {
+            background: var(--primary-dark);
+            color: rgba(255,255,255,0.60);
+            text-align: center;
+            padding: 1.5rem 2rem;
+            font-size: 0.85rem;
+        }
+
+        .site-footer a { color: var(--primary-lighter); text-decoration: none; }
+        .site-footer a:hover { color: #fff; }
+
+        /* ── Responsive ── */
+        @media (max-width: 660px) {
+            .hero-inner { flex-direction: column; text-align: center; gap: 1.5rem; }
+            .hero-contact, .hero-links { justify-content: center; }
+            .hero-info h1 { font-size: 2rem; }
+            .hero-photo { width: 180px; height: 180px; }
+            .section-card { padding: 1.4rem 1.2rem; }
+            .edu-item, .simple-item { flex-direction: column; gap: 0.25rem; }
+            .paper-card { flex-direction: column; }
+            .paper-thumb { width: 100%; }
+            .nav-toggle { display: flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: var(--nav-height);
+                left: 0; right: 0;
+                background: var(--primary-dark);
+                flex-direction: column;
+                padding: 0.5rem 1rem 1rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            }
+            .nav-links.mobile-open { display: flex; }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" href="favicon_logosc/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
-<div class="header">
-    <div>
-        <div class="title">Gong Siyuan</div>
-        <div class="subtitle">龚思元</div>
-    </div>
-</div>
+<!-- Nav -->
+<nav class="nav-bar">
+    <a class="nav-brand" href="#">Siyuan Gong</a>
+    <ul class="nav-links" id="nav-menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#life">Life</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#publications">Publications</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+    </button>
+</nav>
 
-<div class="nav-bar">
-    <a href="#about">About Me</a>
-    <a href="#award">Awards and Honors</a>
-    <a href="#experience">Experience</a>
-    <a href="#blog">Blog</a>
-    <a href="#publications">Publications</a>
-</div>
-
-<div class="content">
-    <div class = "text-container0">
-        <p>Welcome to my academic personal page. Here you can find information about my research, publications, and more.</p>
-        <p>Feel free to explore the various sections to learn more about my work and achievements.</p>
-        <p>欢迎来到一个女孩纸的个人主页(///▽///)</p>
-        <div class="footer">
-            <a href="mailto:siyuang3@illinois.edu" class="icon"><i class="fas fa-envelope"></i> Email</a>
-            <a href="https://github.com/Gooosy" class="icon"><i class="fab fa-github"></i> Github</a>
+<!-- Hero -->
+<div class="hero">
+    <div class="hero-inner">
+        <img class="hero-photo" src="file/me.JPG" alt="Siyuan Gong">
+        <div class="hero-info">
+            <h1>Gong Siyuan</h1>
+            <div class="chinese-name">龚思元</div>
+            <div class="affiliation">
+                <strong>B.S. in Computer Engineering</strong><br>
+                Zhejiang University &amp; University of Illinois Urbana-Champaign<br>
+                Expected Graduation: June 2027
+            </div>
+            <div class="hero-contact">
+                <a href="mailto:siyuang3@illinois.edu" title="siyuang3@illinois.edu"><i class="fas fa-envelope"></i> Email</a>
+                <a href="https://github.com/Gooosy" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/siyuan-gong-38373833a" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://discord.com/users/goosy_42" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+            </div>
+            <div class="hero-links">
+                <a href="file/CV.pdf" target="_blank"><i class="fas fa-file-pdf"></i> CV</a>
+                <a href="file/UIUC_Transcript.pdf" target="_blank"><i class="fas fa-scroll"></i> Transcript</a>
+            </div>
         </div>
-        <p>Email:siyuang3@illinois.edu</p>
-        <div class="links">
-            <p>Links: 
-                <a href="file/CV_Siyuan_GONG.pdf" target="_blank">CV</a>  
-                <a href="file/UIUC_Transcript.pdf" target="_blank">UIUC Transcript</a>  
-                <!-- <a href="file/ZJU_Transcript.pdf" target="_blank">ZJU Transcript</a> -->
-            </p>
+    </div>
+</div>
+
+<main class="main-content">
+
+    <!-- About -->
+    <section class="section-card fade-in" id="about">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-user"></i></span>
+            About Me
+        </h2>
+        <p class="about-text">I'm Siyuan Gong (龚思元).</p>
+        <p class="about-text">欢迎来到一个女孩纸的个人主页 (///▽///)</p>
+        <p class="about-text">
+            I'm a student in the joint program of
+            <strong>Zhejiang University</strong> and the <strong>University of Illinois Urbana-Champaign</strong>,
+            majoring in Computer Engineering, expected to graduate in June 2027.
+            I love research, building cool systems, and occasionally pretending I understand math. ^_^
+        </p>
+        <p class="about-text">Feel free to explore — and don't hesitate to reach out! o(≧v≦)o</p>
+        <p class="about-text" style="margin-top:0.9rem; color:var(--text-muted); font-size:0.92rem;">
+            ✨ Wishlist: become a tenured student (yes, a lifetime student) &amp; a full-time daughter (no work, just vibes).
+        </p>
+    </section>
+
+    <!-- Education -->
+    <section class="section-card fade-in" id="education">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-graduation-cap"></i></span>
+            Education
+        </h2>
+        <div class="edu-list">
+            <div class="edu-item">
+                <div>
+                    <div class="edu-school">University of Illinois Urbana-Champaign</div>
+                    <div class="edu-degree">B.S. in Computer Engineering</div>
+                    <div class="edu-badges">
+                        <span class="edu-badge"><i class="fas fa-star"></i> GPA 4.0 / 4.0</span>
+                    </div>
+                </div>
+                <div class="edu-date">Sept 2023 – Present</div>
+            </div>
+            <hr class="edu-divider">
+            <div class="edu-item">
+                <div>
+                    <div class="edu-school">Zhejiang University</div>
+                    <div class="edu-degree">B.Eng. in Electrical and Computer Engineering</div>
+                    <div class="edu-badges">
+                        <span class="edu-badge"><i class="fas fa-star"></i> GPA 3.90 / 4.0</span>
+                        <span class="edu-badge"><i class="fas fa-trophy"></i> Rank 3 / 70</span>
+                    </div>
+                </div>
+                <div class="edu-date">Sept 2023 – Present</div>
+            </div>
         </div>
-    </div>
-    <img src="file/me.JPG" alt="My Photo">
-</div>
+    </section>
 
-<div id="about">
-    <h2>About Me</h2>
-    <div class = "text-container">
-        <p>Hi, I am Siyuan Gong from Zhejiang University and University of Illinois at Urbana-Champaign, majoring Electrical and Computer Engineering(ECE), expected to receive the degree of Bachelor of Science in June, 2027.</p>
-    </div>
-</div>
-
-
-<div id="award">
-    <h2>Awards and Honors</h2>
-    <div class = "text-container">
-        <p>Dean’s List, University of Illinois at Urbana-Champaign, 2024</p>
-        <p>National Scholarship, Ministry of Education of People’s Republic of China, 2024, 2025</p>
-        <p>Meritorious Winner in Mathematical Contest in Modeling, Consortium for Mathematics and its Applications, 2024</p>
-        <p>First Prize Scholarship for Academic Excellence, Zhejiang University-University of Illinois Urbana-Champaign Institute, 2024</p>
-        <p>Gold Medal in iGEM, International Genetically Engineered Machine Foundation, 2024</p>
-    </div> 
-</div>
-
-<div id="experience">
-    <h2>Experience</h2>
-    <div class = "text-container">
-        <ul>
-            <li>Graph-Based In-Context Learning Enhancement</li>
-            <p>One of the most important experiments of my life! 
-                It ignited my passion for research and made me rethink my future plans. 
-                Our work was submitted to KDD 2025 but was not accepted.
-                I contributed as the second author, helping to refine the idea, conduct experiments, and write the paper. 
-                For a detailed reflection and summary of this experience, check out my <span class="links"><a href="https://blog.csdn.net/CinderGirl/article/details/145701598?fromshare=blogdetail&sharetype=blogdetail&sharerId=145701598&sharerefer=PC&sharesource=CinderGirl&sharefrom=from_link" target="_blank">blog</a></span>
-            </p>
-            <li>iGEM Competition</li>
-            <p>An amazing interdisciplinary adventure! 
-                I helped apply neural network and Python scripts to batch process biological images and data. 
-                I also contributed to build a math model to simulate gene interactions. 
-                Our goal? Making cosmetics cheap and safe (which girl doesn’t care about that, especially when it’s for skincare^ω^).</p>
-            <li>COMAP Math Modeling Competition</li>
-            <p>It was a valuable experience that taught me how to tackle the unfamiliar and uncertain. 
-                I had to quickly grasp essential knowledge and identify the most important aspects. 
-                Working with a team of three required managing disagreements, learning to persuade others, and finding compromises. 
-                Overall, brilliant!</p>
-            <li>Volunteer Work</li>
-            <p>I assisted elderly patients with electronic registration at a hospital, reflecting on technology's role in progress and digital divides. 
-                I also tutored a middle school student from Xinjiang Province in physics. 
-                It broadens my perspective of the world and makes me grateful for what I have. 
-                Let’s work together and make a little positive impact.o(≧v≦)o</p>
-            <li>Sports</li>
-            <p>I enjoy all kinds of sports and love the feeling of daydreaming and zoning out while exercising.
-                My favorite activities include hiking, cycling, running, and swimming. 
-                But I'm not so good at ball games—I'm more of a watcher than a player.</p>
-            <li>Others</li>
-            <p>I'm planning to start keeping a daily journal this new semester. 
-                I also want to try developing a new skill—photography and video editing. 
-                If it works out, I might start a WeChat video channel to share some beautiful scenery I capture.</p>
+    <!-- Awards -->
+    <section class="section-card fade-in" id="awards">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-award"></i></span>
+            Awards &amp; Honors
+        </h2>
+        <ul class="awards-list">
+            <li class="award-item">
+                <i class="fas fa-trophy award-icon"></i>
+                <div>
+                    <div class="award-name">Dean's List</div>
+                    <div class="award-org">University of Illinois at Urbana-Champaign, 2024 &amp; 2025</div>
+                </div>
+            </li>
+            <li class="award-item">
+                <i class="fas fa-medal award-icon"></i>
+                <div>
+                    <div class="award-name">National Scholarship</div>
+                    <div class="award-org">Ministry of Education of People's Republic of China, 2024 &amp; 2025</div>
+                </div>
+            </li>
+            <li class="award-item">
+                <i class="fas fa-star award-icon"></i>
+                <div>
+                    <div class="award-name">Meritorious Winner — Mathematical Contest in Modeling</div>
+                    <div class="award-org">COMAP, 2024</div>
+                </div>
+            </li>
+            <li class="award-item">
+                <i class="fas fa-graduation-cap award-icon"></i>
+                <div>
+                    <div class="award-name">First Prize Scholarship for Academic Excellence</div>
+                    <div class="award-org">ZJU-UIUC Institute, 2024</div>
+                </div>
+            </li>
+            <li class="award-item">
+                <i class="fas fa-flask award-icon"></i>
+                <div>
+                    <div class="award-name">Gold Medal — iGEM</div>
+                    <div class="award-org">International Genetically Engineered Machine Foundation, 2024</div>
+                </div>
+            </li>
         </ul>
-        <!-- <p>Details to be added</p>  -->
-    </div>
-</div>
+    </section>
 
-<div id="blog">
-    <h2>Blog</h2>
-    <div class="text-container">
-        <div class="links"> <a href="https://blog.csdn.net/CinderGirl" target="_blank">CSDN</a>
+    <!-- Research -->
+    <section class="section-card fade-in" id="research">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-flask"></i></span>
+            Research
+        </h2>
+        <div class="paper-card">
+            <div class="paper-thumb">
+                <img src="docs/model2.png" alt="ContextG model diagram">
+            </div>
+            <div>
+                <div class="paper-title">Can Inherent Graph Structure Enhance In-Context Learning?</div>
+                <div class="paper-authors">
+                    Yifei Sun, <strong>Siyuan Gong</strong>, Yuxiang Wan, Zaoshi Wang,
+                    Haoyang Zhong, Chunping Wang, Lei CHEN, Yang Yang
+                </div>
+                <span class="paper-venue">Submitted to KDD 2025 &nbsp;·&nbsp; Preprint, 2025</span>
+                <div class="paper-abstract">
+                    One of the most important experiences of my life — it ignited my passion for research and made me rethink my future plans!
+                    We propose ContextG, the first framework to introduce graph structures into ICL.
+                    By modeling structural relationships among examples and test queries,
+                    ContextG enhances LLM reasoning while improving efficiency.
+                </div>
+                <div class="paper-links">
+                    <a class="paper-link" href="https://gooosy.github.io/docs/660_Can_Inherent_Graph_Structu.pdf" target="_blank">
+                        <i class="fas fa-file-pdf"></i> PDF
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="links">
-        <a href="https://gooosy.github.io/Mywiki/" target="_blank">Mywiki</a>
+    </section>
+
+    <!-- Projects -->
+    <section class="section-card fade-in" id="projects">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-code"></i></span>
+            Projects
+        </h2>
+        <div class="simple-list">
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">RISC-V Operating System Kernel</div>
+                    <div class="simple-sub">Virtual memory, threads, syscalls, ELF loader, and file system in C &amp; assembly on QEMU.</div>
+                </div>
+                <div class="simple-date">Fall 2025</div>
+            </div>
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">GPT-2 CUDA Kernel Optimizations</div>
+                    <div class="simple-sub">Warp-level reduction, shared-memory tiling, and split-K parallelism for GPT-2 inference on NVIDIA A40. Achieved <strong>20× speedup</strong> over baseline.</div>
+                    <div class="simple-links">
+                        <a class="simple-link" href="docs/GPT-2.pdf" target="_blank"><i class="fas fa-file-alt"></i> Report</a>
+                    </div>
+                </div>
+                <div class="simple-date">Fall 2025</div>
+            </div>
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">Collaborative Expense Management System</div>
+                    <div class="simple-sub">MySQL on GCP with multi-currency support, group budgeting, and SERIALIZABLE transaction debt settlement.</div>
+                    <div class="simple-links">
+                        <a class="simple-link" href="https://github.com/Gooosy/CS411_project" target="_blank"><i class="fab fa-github"></i> Repo</a>
+                    </div>
+                </div>
+                <div class="simple-date">Fall 2025</div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<div id="publications">
-    <h2>Publications</h2>
-    <div class = "text-container">
-        <p>...(⁎⁍̴̛ᴗ⁍̴̛⁎)</p>
-    </div>
-</div>
+    <!-- Experience -->
+    <section class="section-card fade-in" id="experience">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-star"></i></span>
+            Experience
+        </h2>
+        <div class="simple-list">
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">International Genetically Engineered Machine Competition (iGEM)</div>
+                    <div class="simple-sub">An amazing interdisciplinary adventure with Team iZJU-China! Built a CNN for yeast image processing and a differential equation model for gene interactions. Our goal? Making cosmetics cheap and safe — which girl doesn't care about that, especially for skincare ^ω^</div>
+                    <div class="simple-links">
+                        <a class="simple-link" href="https://2024.igem.wiki/izju-china/" target="_blank"><i class="fas fa-globe"></i> Project Website</a>
+                        <a class="simple-link" href="https://gooosy.github.io/docs/igem.pdf" target="_blank"><i class="fas fa-medal"></i> Gold Medal Certificate</a>
+                    </div>
+                </div>
+                <div class="simple-date">Apr – Oct 2024</div>
+            </div>
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">Mathematical Contest in Modeling (COMAP MCM)</div>
+                    <div class="simple-sub">Tackled the unknown with a team of three — modeled sea lamprey populations using Leslie Matrix &amp; Lotka-Volterra. Learned to disagree, persuade, compromise, and deliver. Overall, brilliant! ✨</div>
+                    <div class="simple-links">
+                        <a class="simple-link" href="docs/MCM_paper.pdf" target="_blank"><i class="fas fa-file-alt"></i> Report</a>
+                        <a class="simple-link" href="docs/MCM.pdf" target="_blank"><i class="fas fa-award"></i> Certificate</a>
+                    </div>
+                </div>
+                <div class="simple-date">Feb 2024</div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Teaching -->
+    <section class="section-card fade-in" id="teaching">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+            Teaching
+        </h2>
+        <div class="simple-list">
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">Teaching Assistant — ECE 120: Introduction to Computing</div>
+                    <div class="simple-sub">ZJU-UIUC Institute &nbsp;·&nbsp; Instructors: Lin Qiu, Zuozhu Liu, Ujjal Bhowmik</div>
+                </div>
+                <div class="simple-date">Sep 2024 – Jan 2025</div>
+            </div>
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">Course Assistant — ECE 408: Applied Parallel Programming</div>
+                    <div class="simple-sub">UIUC &nbsp;·&nbsp; Instructor: Volodymyr Kindratenko</div>
+                </div>
+                <div class="simple-date">Sep 2024 – Jan 2025</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Life -->
+    <section class="section-card fade-in" id="life">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-heart"></i></span>
+            Life
+        </h2>
+        <div class="simple-list">
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">Volunteer Work</div>
+                    <div class="simple-sub">Helped elderly patients navigate electronic hospital registration — a small reminder of how much the digital divide still matters. Also tutored a middle school student from Xinjiang Province in physics. It's humbling, perspective-broadening, and makes me genuinely grateful. Let's make a little positive impact. o(≧v≦)o</div>
+                </div>
+                <div class="simple-date">2023 – 2024</div>
+            </div>
+            <div class="simple-item">
+                <div class="simple-left">
+                    <div class="simple-title">Sports</div>
+                    <div class="simple-sub">Hiking, cycling, running, and swimming are my go-to ways to zone out and daydream. Oh — and I placed <strong>2nd in the women's 800m race</strong> at college, which I'm still quietly proud of. 🏃‍♀️</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog -->
+    <section class="section-card fade-in" id="blog">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-pen-nib"></i></span>
+            Blog
+        </h2>
+        <div class="blog-links">
+            <a href="https://blog.csdn.net/CinderGirl" target="_blank" class="blog-card">
+                <div class="blog-card-icon"><i class="fas fa-code"></i></div>
+                <div>
+                    <div class="blog-card-label">CSDN Blog</div>
+                    <div class="blog-card-sub">Technical articles &amp; research reflections</div>
+                </div>
+            </a>
+            <a href="https://gooosy.github.io/Mywiki/" target="_blank" class="blog-card">
+                <div class="blog-card-icon"><i class="fas fa-book-open"></i></div>
+                <div>
+                    <div class="blog-card-label">My Wiki</div>
+                    <div class="blog-card-sub">Personal knowledge base</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Publications -->
+    <section class="section-card fade-in" id="publications">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-book"></i></span>
+            Publications
+        </h2>
+        <div class="pubs-empty">
+            <i class="fas fa-hourglass-half"></i>
+            Working hard on it... stay tuned! (⁎⁍̴̛ᴗ⁍̴̛⁎)
+        </div>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <p>&copy; 2025 Siyuan Gong &middot; <a href="mailto:siyuang3@illinois.edu">siyuang3@illinois.edu</a></p>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+<script src="js/main.js"></script>
 </body>
 </html>
