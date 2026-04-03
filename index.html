@@ -416,6 +416,19 @@
 
         .simple-link:hover { background: var(--primary-lighter); color: var(--primary-dark); }
 
+        .course-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.18rem 0.65rem;
+            border-radius: 20px;
+            background: var(--primary);
+            color: #fff;
+            letter-spacing: 0.3px;
+            margin-left: 0.55rem;
+            vertical-align: middle;
+        }
+
         .simple-date {
             font-size: 0.82rem;
             color: var(--text-muted);
@@ -753,14 +766,14 @@
         <div class="simple-list">
             <div class="simple-item">
                 <div class="simple-left">
-                    <div class="simple-title">RISC-V Operating System Kernel</div>
+                    <div class="simple-title">RISC-V Operating System Kernel <span class="course-badge">ECE391</span></div>
                     <div class="simple-sub">Virtual memory, threads, syscalls, ELF loader, and file system in C &amp; assembly on QEMU.</div>
                 </div>
                 <div class="simple-date">Fall 2025</div>
             </div>
             <div class="simple-item">
                 <div class="simple-left">
-                    <div class="simple-title">GPT-2 CUDA Kernel Optimizations</div>
+                    <div class="simple-title">GPT-2 CUDA Kernel Optimizations <span class="course-badge">ECE408</span></div>
                     <div class="simple-sub">Warp-level reduction, shared-memory tiling, and split-K parallelism for GPT-2 inference on NVIDIA A40. Achieved <strong>20× speedup</strong> over baseline.</div>
                     <div class="simple-links">
                         <a class="simple-link" href="docs/GPT-2.pdf" target="_blank"><i class="fas fa-file-alt"></i> Report</a>
@@ -770,7 +783,7 @@
             </div>
             <div class="simple-item">
                 <div class="simple-left">
-                    <div class="simple-title">Collaborative Expense Management System</div>
+                    <div class="simple-title">Collaborative Expense Management System <span class="course-badge">CS411</span></div>
                     <div class="simple-sub">MySQL on GCP with multi-currency support, group budgeting, and SERIALIZABLE transaction debt settlement.</div>
                     <div class="simple-links">
                         <a class="simple-link" href="https://github.com/Gooosy/CS411_project" target="_blank"><i class="fab fa-github"></i> Repo</a>
@@ -843,6 +856,15 @@
             <span class="section-icon"><i class="fas fa-heart"></i></span>
             Life
         </h2>
+
+        <!-- Travel Map -->
+        <div style="margin-bottom:1.5rem">
+            <div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:0.6rem">
+                🌍 Places I've Been &nbsp;<span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--primary);font-size:0.82rem">· 11 countries</span>
+            </div>
+            <div id="travel-map" style="width:100%;height:300px;border-radius:10px;overflow:hidden;border:1px solid var(--border)"></div>
+        </div>
+
         <div class="simple-list">
             <div class="simple-item">
                 <div class="simple-left">
@@ -853,8 +875,8 @@
             </div>
             <div class="simple-item">
                 <div class="simple-left">
-                    <div class="simple-title">Sports</div>
-                    <div class="simple-sub">Hiking, cycling, running, and swimming are my go-to ways to zone out and daydream. Oh — and I placed <strong>2nd in the women's 800m race</strong> at college, which I'm still quietly proud of. 🏃‍♀️</div>
+                    <div class="simple-title">Sports &amp; Reading</div>
+                    <div class="simple-sub">Hiking, cycling, running, and swimming are my go-to ways to zone out and daydream. Oh — and I placed <strong>2nd in the women's 800m race</strong> at college, which I'm still quietly proud of. 🏃‍♀️ When I'm not moving, I'm reading — I love all kinds of novels. Join me on WeChat Read! 📚</div>
                 </div>
             </div>
         </div>
@@ -907,5 +929,66 @@
 </button>
 
 <script src="js/main.js"></script>
+
+<!-- amCharts 5 Travel Map -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script>
+(function () {
+    var root = am5.Root.new("travel-map");
+
+    root.setThemes([am5themes_Animated.new(root)]);
+
+    var chart = root.container.children.push(
+        am5map.MapChart.new(root, {
+            panX: "translateX",
+            panY: "translateY",
+            projection: am5map.geoNaturalEarth1(),
+            homeZoomLevel: 1.2,
+            background: am5.Rectangle.new(root, {
+                fill: am5.color("#f0faf4")
+            })
+        })
+    );
+
+    // Base layer — all countries
+    var baseSeries = chart.series.push(
+        am5map.MapPolygonSeries.new(root, {
+            geoJSON: am5geodata_worldLow
+        })
+    );
+
+    baseSeries.mapPolygons.template.setAll({
+        fill: am5.color("#e2f0e8"),
+        stroke: am5.color("#c8e6d4"),
+        strokeWidth: 0.5
+    });
+
+    // Visited countries layer
+    var visitedSeries = chart.series.push(
+        am5map.MapPolygonSeries.new(root, {
+            geoJSON: am5geodata_worldLow,
+            include: ["CN", "IT", "FR", "DE", "US", "FI", "SE", "MV", "SG", "GR", "AU"]
+        })
+    );
+
+    visitedSeries.mapPolygons.template.setAll({
+        fill: am5.color("#52b788"),
+        stroke: am5.color("#2d6a4f"),
+        strokeWidth: 0.8,
+        tooltipText: "{name}",
+        interactive: true,
+        cursorOverStyle: "pointer"
+    });
+
+    visitedSeries.mapPolygons.template.states.create("hover", {
+        fill: am5.color("#1b4332")
+    });
+
+    chart.appear(1000, 100);
+})();
+</script>
 </body>
 </html>
