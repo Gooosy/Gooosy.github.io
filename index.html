@@ -254,27 +254,37 @@
             gap: 1rem;
         }
 
+        .edu-item-inner { display: flex; align-items: flex-start; gap: 0.85rem; }
+
+        .edu-logo {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            object-fit: contain;
+            background: #fff;
+            padding: 2px;
+        }
+
+        .edu-logo-text {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--primary-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            letter-spacing: 0.3px;
+        }
+
         .edu-school { font-weight: 700; color: var(--primary-dark); font-size: 0.97rem; }
         .edu-degree { font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 0.12rem; }
-
-        .edu-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 0.4rem;
-        }
-
-        .edu-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.28rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.16rem 0.55rem;
-            border-radius: 6px;
-            background: var(--primary-pale);
-            color: var(--primary-dark);
-        }
 
         .edu-date {
             font-size: 0.83rem;
@@ -541,6 +551,58 @@
         #back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
         #back-to-top:hover { background: var(--primary-dark); }
 
+        /* ── Lightbox ── */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.80);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox-overlay.open { display: flex; }
+
+        .lightbox-overlay img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            object-fit: contain;
+            cursor: default;
+        }
+
+        .hero-photo {
+            cursor: zoom-in;
+            transition: opacity 0.18s;
+        }
+
+        .hero-photo:hover { opacity: 0.88; }
+
+        #lightbox-close {
+            position: fixed;
+            top: 1.2rem;
+            right: 1.4rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.4);
+            color: #fff;
+            font-size: 1.4rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.18s;
+            z-index: 2001;
+        }
+
+        #lightbox-close:hover { background: rgba(255,255,255,0.30); }
+
         /* ── Footer ── */
         .site-footer {
             background: var(--primary-dark);
@@ -656,23 +718,22 @@
         </h2>
         <div class="edu-list">
             <div class="edu-item">
-                <div>
-                    <div class="edu-school">University of Illinois Urbana-Champaign</div>
-                    <div class="edu-degree">B.S. in Computer Engineering</div>
-                    <div class="edu-badges">
-                        <span class="edu-badge"><i class="fas fa-star"></i> GPA 4.0 / 4.0</span>
+                <div class="edu-item-inner">
+                    <img class="edu-logo" src="https://www.google.com/s2/favicons?domain=illinois.edu&sz=64" alt="UIUC">
+                    <div>
+                        <div class="edu-school">University of Illinois Urbana-Champaign</div>
+                        <div class="edu-degree">B.S. in Computer Engineering</div>
                     </div>
                 </div>
                 <div class="edu-date">Sept 2023 – Present</div>
             </div>
             <hr class="edu-divider">
             <div class="edu-item">
-                <div>
-                    <div class="edu-school">Zhejiang University</div>
-                    <div class="edu-degree">B.Eng. in Electrical and Computer Engineering</div>
-                    <div class="edu-badges">
-                        <span class="edu-badge"><i class="fas fa-star"></i> GPA 3.90 / 4.0</span>
-                        <span class="edu-badge"><i class="fas fa-trophy"></i> Rank 3 / 70</span>
+                <div class="edu-item-inner">
+                    <img class="edu-logo" src="file/Zhejiang_University_Logo.svg" alt="ZJU">
+                    <div>
+                        <div class="edu-school">Zhejiang University</div>
+                        <div class="edu-degree">B.Eng. in Electrical and Computer Engineering</div>
                     </div>
                 </div>
                 <div class="edu-date">Sept 2023 – Present</div>
@@ -923,6 +984,12 @@
 <footer class="site-footer">
     <p>&copy; 2025 Siyuan Gong &middot; <a href="mailto:siyuang3@illinois.edu">siyuang3@illinois.edu</a></p>
 </footer>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox">
+    <button id="lightbox-close" aria-label="Close">&times;</button>
+    <img src="file/me.JPG" alt="Siyuan Gong">
+</div>
 
 <button id="back-to-top" aria-label="Back to top">
     <i class="fas fa-chevron-up"></i>

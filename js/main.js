@@ -72,6 +72,23 @@ navMenu.querySelectorAll('a').forEach((link) => {
   });
 });
 
+/* ----- Photo lightbox ----- */
+const lightbox = document.getElementById('lightbox');
+const heroPhoto = document.querySelector('.hero-photo');
+
+heroPhoto.addEventListener('click', () => lightbox.classList.add('open'));
+
+lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+
+document.getElementById('lightbox-close').addEventListener('click', (e) => {
+  e.stopPropagation();
+  lightbox.classList.remove('open');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') lightbox.classList.remove('open');
+});
+
 /* ----- Stagger delay on award items ----- */
 document.querySelectorAll('.award-item').forEach((el, i) => {
   el.style.transitionDelay = `${i * 60}ms`;
