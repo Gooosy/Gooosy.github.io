@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goosy terminal: an interactive introduction to Siyuan Gong.">
+    <title>Goosy Terminal | Siyuan Gong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../favicon_logosc/favicon.ico" type="image/x-icon">
+    <style>
+        :root {
+            --navy: #10294c;
+            --green: #008a49;
+            --orange: #ba4a08;
+            --paper: #fff;
+            --chrome: #f1f1ef;
+            --border: #a9aaa6;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: clamp(16px, 4vw, 54px);
+            display: grid;
+            place-items: center;
+            color: var(--navy);
+            background-color: #f4f1e9;
+            background-image: radial-gradient(#c8c2b4 0.7px, transparent 0.7px);
+            background-size: 16px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .terminal {
+            width: min(1180px, 100%);
+            min-height: min(760px, calc(100vh - clamp(32px, 8vw, 108px)));
+            background: var(--paper);
+            border: 2px solid var(--border);
+            box-shadow: 12px 12px 0 rgba(16, 41, 76, 0.12);
+        }
+
+        .titlebar {
+            height: 52px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--chrome);
+            border-bottom: 1px solid #d7d7d3;
+            color: #642100;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .traffic { width: 14px; height: 14px; border-radius: 50%; }
+        .traffic.red { background: #ff5f57; }
+        .traffic.yellow { background: #febc2e; }
+        .traffic.green { background: #28c840; margin-right: 12px; }
+        .titlebar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .home-link { margin-left: auto; color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+
+        .screen {
+            padding: clamp(24px, 4.5vw, 58px);
+            font-size: clamp(0.88rem, 1.35vw, 1.15rem);
+            line-height: 1.62;
+        }
+
+        .output-line { min-height: 1.62em; white-space: pre-wrap; }
+        .command { margin-bottom: 24px; font-weight: 500; }
+        .prompt-symbol { color: var(--navy); font-weight: 600; }
+
+        .identity {
+            display: grid;
+            grid-template-columns: 270px minmax(0, 1fr);
+            gap: 34px;
+            align-items: center;
+            margin: 8px 0 28px;
+            min-height: 190px;
+        }
+
+        .goose-drawing {
+            width: 270px;
+            height: 190px;
+            display: block;
+            opacity: 0;
+            overflow: visible;
+        }
+
+        .goose-art { clip-path: inset(0 100% 0 0); }
+        .goose-eye-open { animation: goose-eye-open 3.4s steps(1, end) infinite; }
+        .goose-eye-closed { opacity: 0; animation: goose-eye-closed 3.4s steps(1, end) infinite; }
+        .goose-drawing.pointer-blink .goose-eye-open { opacity: 0; animation: none; }
+        .goose-drawing.pointer-blink .goose-eye-closed { opacity: 1; animation: none; }
+
+        .goose-eye-open, .goose-eye-closed {
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        @keyframes goose-eye-open {
+            0%, 91%, 96%, 100% { opacity: 1; }
+            92%, 95% { opacity: 0; }
+        }
+
+        @keyframes goose-eye-closed {
+            0%, 91%, 96%, 100% { opacity: 0; }
+            92%, 95% { opacity: 1; }
+        }
+
+        .product-version { font-size: 1.35em; }
+        .product-name { color: var(--green); font-weight: 600; }
+        .build-meta { color: #626974; }
+        .bio { max-width: 940px; margin: 0 0 24px; }
+        .bio strong { color: var(--green); }
+        .hint { margin-top: 26px; }
+
+        .terminal-output { display: grid; gap: 24px; }
+        .terminal-output:not(:empty) { margin-top: 24px; }
+
+        .command-entry {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .command-echo { margin-bottom: 10px; font-weight: 500; }
+        .command-result { color: #263d5b; }
+        .command-result p { margin: 0; }
+        .command-result p + p { margin-top: 1.15em; }
+
+        .output-title {
+            margin-bottom: 12px;
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .help-section + .help-section { margin-top: 18px; }
+        .help-grid {
+            display: grid;
+            grid-template-columns: max-content minmax(0, 1fr);
+            gap: 3px 24px;
+        }
+        .help-command { color: var(--green); font-weight: 500; }
+        .help-description { color: #626974; }
+
+        .skills-list { display: grid; gap: 14px; max-width: 850px; }
+        .skill-main {
+            display: grid;
+            grid-template-columns: 14ch minmax(0, 1fr);
+            gap: 16px;
+        }
+        .skill-name { color: var(--green); font-weight: 500; }
+        .skill-tech { color: #263d5b; }
+        .skill-status {
+            margin-left: calc(14ch + 16px);
+            color: #626974;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .skill-status-icon {
+            width: 1.15em;
+            height: 1.15em;
+            display: inline-block;
+            object-fit: contain;
+        }
+        .skills-summary { margin-top: 18px; }
+
+        .profile-data {
+            display: grid;
+            grid-template-columns: 12ch minmax(0, 1fr);
+            gap: 3px 18px;
+            max-width: 720px;
+        }
+        .profile-key { color: #626974; }
+        .profile-value { color: #263d5b; }
+
+        .agent-files { margin-top: 20px; }
+        .agent-file-list { display: grid; gap: 12px; }
+        .agent-file {
+            display: grid;
+            grid-template-columns: minmax(190px, max-content) minmax(0, 1fr);
+            gap: 16px;
+            align-items: baseline;
+        }
+        .terminal-link {
+            width: fit-content;
+            color: var(--green);
+            font-weight: 500;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+        .terminal-link:hover, .terminal-link:focus-visible { color: var(--navy); }
+        .file-description { color: #626974; }
+        .training-tree { display: grid; gap: 4px; margin-top: 5px; }
+
+        .ping-meta { display: grid; grid-template-columns: 9ch minmax(0, 1fr); gap: 3px 14px; }
+        .contact-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border: 1px solid #aeb9c5;
+            border-radius: 4px;
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .contact-link:hover, .contact-link:focus-visible {
+            color: var(--green);
+            border-color: var(--green);
+            outline: none;
+        }
+        .contact-link i { width: 1.1em; text-align: center; }
+
+        .eval-list { display: grid; gap: 14px; }
+        .eval-entry {
+            display: grid;
+            grid-template-columns: 11ch minmax(0, 1fr);
+            gap: 4px 16px;
+        }
+        .eval-badge { color: var(--green); font-weight: 500; }
+        .eval-name { color: #263d5b; font-weight: 500; }
+        .eval-meta { grid-column: 2; color: #626974; }
+        .eval-evidence { grid-column: 2; }
+        .eval-summary { margin-top: 18px; }
+
+        .edge-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px 28px;
+            max-width: 760px;
+        }
+        .edge-node { display: grid; grid-template-columns: 3ch minmax(0, 1fr); gap: 10px; }
+        .edge-code { color: var(--green); font-weight: 500; }
+        .edge-summary { margin-top: 18px; }
+
+        .usage-list { display: grid; gap: 5px; }
+        .usage-row {
+            display: grid;
+            grid-template-columns: minmax(245px, 1fr) 3ch 15ch;
+            gap: 12px;
+            align-items: baseline;
+            max-width: 670px;
+        }
+        .usage-percent { text-align: right; }
+        .usage-bar { color: var(--green); white-space: nowrap; }
+
+        .subscription-rate { color: var(--green); font-weight: 600; }
+        .subscription-qr {
+            width: min(210px, 70vw);
+            height: auto;
+            display: block;
+            margin: 18px 0;
+        }
+        .premium-list { margin: 5px 0 0; padding: 0; list-style: none; }
+        .premium-list li::before { content: '- '; }
+
+        .history-list {
+            margin: 0 0 14px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+        .history-note { color: #626974; }
+
+        .exit-sequence { display: grid; gap: 10px; }
+        .exit-goose {
+            width: 190px;
+            height: auto;
+            opacity: 1 !important;
+        }
+        .exit-goose .goose-art { clip-path: inset(0); }
+        .exit-goose.departing { animation: goose-exit-fade 1100ms ease-in 1100ms forwards; }
+        .exit-goose.departing .goose-eye-open { animation: exit-eye-open 650ms steps(1, end) forwards; }
+        .exit-goose.departing .goose-eye-closed { animation: exit-eye-closed 650ms steps(1, end) forwards; }
+
+        @keyframes exit-eye-open {
+            0%, 19%, 35%, 54%, 70%, 100% { opacity: 1; }
+            20%, 34%, 55%, 69% { opacity: 0; }
+        }
+
+        @keyframes exit-eye-closed {
+            0%, 19%, 35%, 54%, 70%, 100% { opacity: 0; }
+            20%, 34%, 55%, 69% { opacity: 1; }
+        }
+
+        @keyframes goose-exit-fade {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .input-row { display: none; align-items: baseline; gap: 12px; margin-top: 20px; }
+        .input-row.ready { display: flex; }
+        .input-row.exiting { display: none; }
+        .terminal-input {
+            width: 0;
+            min-width: 1px;
+            max-width: calc(100% - 2.2em);
+            flex: 0 1 auto;
+            border: 0;
+            padding: 0;
+            outline: 0;
+            color: var(--navy);
+            background: transparent;
+            caret-color: transparent;
+            font: inherit;
+            line-height: inherit;
+        }
+
+        .terminal-cursor {
+            width: 0.54em;
+            height: 1.18em;
+            flex: 0 0 auto;
+            display: inline-block;
+            align-self: center;
+            margin-left: -8px;
+            background: var(--navy);
+            animation: cursor-blink 1s steps(1, end) infinite;
+        }
+
+        @keyframes cursor-blink {
+            0%, 52% { opacity: 1; }
+            53%, 100% { opacity: 0; }
+        }
+
+        .terminal-input:disabled { cursor: wait; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+        @media (max-width: 620px) {
+            body { padding: 0; place-items: stretch; background: #fff; }
+            .terminal { min-height: 100vh; border: 0; box-shadow: none; }
+            .titlebar { height: 48px; padding: 0 14px; }
+            .home-link { font-size: 0; border: 0; }
+            .home-link::after { content: 'exit'; font-size: 0.78rem; }
+            .screen { padding: 26px 18px 40px; }
+            .identity { grid-template-columns: 145px minmax(0, 1fr); gap: 14px; min-height: 104px; }
+            .goose-drawing { width: 145px; height: 104px; }
+            .help-grid { grid-template-columns: 1fr; gap: 1px; }
+            .help-description { margin-bottom: 8px; }
+            .skill-main { grid-template-columns: 1fr; gap: 1px; }
+            .skill-status { margin-left: 0; }
+            .profile-data, .ping-meta { grid-template-columns: 1fr; gap: 0; }
+            .profile-value { margin-bottom: 7px; }
+            .agent-file { grid-template-columns: 1fr; gap: 2px; }
+            .edge-grid { grid-template-columns: 1fr; }
+            .eval-entry { grid-template-columns: 1fr; gap: 2px; }
+            .eval-meta, .eval-evidence { grid-column: 1; }
+            .usage-row { grid-template-columns: minmax(0, 1fr) 3ch; gap: 4px 10px; }
+            .usage-bar { grid-column: 1 / -1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .goose-drawing { opacity: 1; }
+            .goose-art { clip-path: inset(0); }
+            .goose-eye-open, .goose-eye-closed { animation: none; }
+            .goose-eye-closed { opacity: 0; }
+            .terminal-cursor { animation: none; }
+            .exit-goose.departing { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <main class="terminal" aria-label="Goosy terminal">
+        <header class="titlebar">
+            <span class="traffic red" aria-hidden="true"></span>
+            <span class="traffic yellow" aria-hidden="true"></span>
+            <span class="traffic green" aria-hidden="true"></span>
+            <span class="titlebar-title">goosy@profile:~</span>
+            <a class="home-link" href="../" aria-label="Exit to interface selector">exit to selector</a>
+        </header>
+
+        <section class="screen" id="screen" aria-live="polite">
+            <div id="boot-output">
+            <div class="output-line command" data-type><span class="prompt-symbol">$</span> goosy --info</div>
+
+            <div class="identity" data-reveal>
+                <svg class="goose-drawing" viewBox="285 358 915 718" role="img" aria-label="Vector trace of Siyuan's original goose drawing">
+                    <g class="goose-art">
+                        <use href="../favicon_logosc/goose-beak.svg#goose-beak"></use>
+                        <use href="../favicon_logosc/goose-ink.svg#goose-ink"></use>
+                    </g>
+                    <path d="M579 471 C580 440 600 422 637 421 C676 420 698 442 700 476 C701 511 676 530 637 529 C599 528 579 507 579 471 Z" fill="#fff"></path>
+                    <g class="goose-eye-open">
+                        <use href="../favicon_logosc/goose-eye.svg#goose-eye"></use>
+                    </g>
+                    <path class="goose-eye-closed" d="M592 473 Q639 505 686 470" fill="none" stroke="#2d2b2b" stroke-width="11" stroke-linecap="round"></path>
+                </svg>
+                <div>
+                    <div class="product-version" data-type><span class="product-name">Goosy</span> <strong>v12.31.42</strong></div>
+                    <div class="build-meta" data-type>0.03k context</div>
+                </div>
+            </div>
+
+            <div class="bio">
+                <div class="output-line" data-type>I'm Siyuan Gong (龚思元).</div>
+                <div class="output-line" data-type>I'm a coding agent jointly developed by Zhejiang University and the University of Illinois Urbana-Champaign.</div>
+                <div class="output-line" data-type>Public release is expected in June 2027.</div>
+            </div>
+
+            <div class="output-line hint" data-type>Type 'help' for available commands.</div>
+            </div>
+
+            <div class="terminal-output" id="terminal-output"></div>
+
+            <form class="input-row" id="terminal-form" autocomplete="off">
+                <label class="sr-only" for="terminal-input">Terminal command</label>
+                <span class="prompt-symbol" aria-hidden="true">$</span>
+                <input class="terminal-input" id="terminal-input" name="command" type="text" spellcheck="false" autocapitalize="off" aria-label="Terminal command">
+                <span class="terminal-cursor" aria-hidden="true"></span>
+            </form>
+        </section>
+    </main>
+    <script src="../js/terminal.js"></script>
+</body>
+</html>
