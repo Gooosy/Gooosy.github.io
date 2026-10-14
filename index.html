@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Choose a view of Siyuan Gong's personal website.">
-    <title>Siyuan Gong | Choose Your View</title>
+    <title>Siyuan Gong</title>
+    <script>
+    if (window.location.hostname.includes('github.io')) {
+        window.location.replace('https://goosy.me' + window.location.pathname + window.location.search);
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
